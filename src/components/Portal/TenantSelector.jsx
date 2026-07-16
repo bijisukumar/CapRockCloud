@@ -1,8 +1,4 @@
-const MOCK_TENANTS = [
-  { slug: "acme-corp", displayName: "Acme Corp" },
-  { slug: "globex-inc", displayName: "Globex Inc." },
-  { slug: "initech", displayName: "Initech" },
-];
+const MOCK_TENANTS = [{ slug: "demo-client", displayName: "Demo Client" }];
 
 export default function TenantSelector({ tenantSlug, onChange }) {
   return (
