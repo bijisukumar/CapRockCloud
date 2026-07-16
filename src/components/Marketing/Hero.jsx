@@ -16,13 +16,13 @@ export default function Hero({ onOpenGate }) {
         </div>
 
         <h1 className="mt-8 max-w-3xl text-4xl font-semibold tracking-tight text-white sm:text-6xl">
-          Middleware modernization for teams who can&apos;t afford downtime.
+          Migrate. Modernize. Move to the cloud. Watch it all with AI.
         </h1>
 
         <p className="mt-6 max-w-xl text-lg text-zinc-400">
-          Caprock Cloud designs, migrates, and operates mission-critical
-          integration platforms on Azure — with full visibility into cost,
-          health, and message flow from day one.
+          Caprock Cloud migrates and modernizes mission-critical middleware
+          onto Azure, then keeps it running with an AI-powered monitoring
+          platform built for teams who can&apos;t afford downtime.
         </p>
 
         <div className="mt-10 flex flex-wrap items-center gap-4">
