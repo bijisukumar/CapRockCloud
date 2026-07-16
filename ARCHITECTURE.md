@@ -67,6 +67,17 @@ from D1 by the tenant slug in the URL, so a customer can never pull another
 tenant's Azure data even if they guess a slug — the mock/real Turbo360 call
 is always parameterized by the row looked up from `tenants`.
 
+## White-labeling Turbo360
+
+Turbo360 is used under the hood as the "AI in Monitoring" capability, but it
+is white-labeled: its name must never appear in anything a customer sees
+(marketing copy, portal UI strings, error messages). Present its
+capabilities as Caprock's own. `Turbo360` as a literal string is fine in
+code comments, internal docs (this file), env var names, and DB column
+names (`turbo360_org_id`) — those are never rendered to a user. When adding
+new portal or marketing text, grep for `Turbo360` before shipping to make
+sure nothing customer-facing leaked the name.
+
 ## D1 schema summary
 
 - `leads` — one row per (email, asset_slug); tracks attribution token and

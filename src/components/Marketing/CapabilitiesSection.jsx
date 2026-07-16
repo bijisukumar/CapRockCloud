@@ -1,23 +1,23 @@
 const CAPABILITIES = [
   {
-    title: "Middleware Modernization",
+    title: "Migration",
     description:
-      "Retire legacy ESB/BizTalk estates and re-platform integrations onto Azure Integration Services without breaking downstream contracts.",
+      "Move legacy applications, middleware, and data onto Azure with a proven, phased methodology — no risky all-at-once cutovers.",
   },
   {
-    title: "Azure Operations & FinOps",
+    title: "Modernization",
     description:
-      "Continuous cost, health, and throughput visibility across every subscription — surfaced through Turbo360-powered dashboards.",
+      "Retire legacy ESB/BizTalk estates and re-platform integrations onto cloud-native services without breaking downstream contracts.",
   },
   {
-    title: "Managed Integration Services",
+    title: "Moving to Cloud",
     description:
-      "24/7 monitoring, incident response, and change management for Logic Apps, Service Bus, API Management, and Functions.",
+      "End-to-end cloud adoption — architecture, landing zones, governance, and workload migration — built for teams who can't afford downtime.",
   },
   {
-    title: "Multi-Tenant Governance",
+    title: "AI in Monitoring",
     description:
-      "Tenant-scoped access, policy, and reporting so every business unit or customer sees only their own environment.",
+      "Our AI-powered monitoring platform delivers real-time infrastructure health, cost intelligence, and anomaly detection across your entire Azure estate.",
   },
 ];
 
@@ -28,8 +28,8 @@ export default function CapabilitiesSection() {
         Capabilities
       </h2>
       <p className="mt-3 max-w-2xl text-2xl font-medium text-white sm:text-3xl">
-        Everything between your legacy middleware and a fully governed Azure
-        estate.
+        Migration, modernization, and cloud operations — backed by AI-driven
+        monitoring built into everything we run for you.
       </p>
 
       <div className="mt-14 grid gap-px overflow-hidden rounded-lg border border-white/10 bg-white/10 sm:grid-cols-2">

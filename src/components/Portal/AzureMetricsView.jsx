@@ -70,7 +70,7 @@ export default function AzureMetricsView({ tenantSlug }) {
   if (status === "error" || !snapshot) {
     return (
       <p className="text-sm text-red-400">
-        Couldn&apos;t load Turbo360 data for this tenant. Try again shortly.
+        Couldn&apos;t load Azure environment data for this tenant. Try again shortly.
       </p>
     );
   }
