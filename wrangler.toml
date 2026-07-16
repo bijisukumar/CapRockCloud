@@ -6,7 +6,7 @@ pages_build_output_dir = "dist"
 [[d1_databases]]
 binding = "CAPROCK_DB"
 database_name = "caprock-db"
-database_id = "00000000-0000-0000-0000-000000000000" # replace with real D1 database_id from `wrangler d1 create`
+database_id = "cb31942e-c90e-4298-a2c2-54b21f884bf4"
 migrations_dir = "db/migrations"
 
 # Secrets (set via `wrangler pages secret put`, never committed):
