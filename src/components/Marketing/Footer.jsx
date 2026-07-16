@@ -21,9 +21,24 @@ export default function Footer() {
             </p>
             <ul className="mt-3 space-y-2 text-sm">
               <li>
-                <a href="#capabilities" className="text-zinc-400 hover:text-zinc-200">
+                <a href="/#capabilities" className="text-zinc-400 hover:text-zinc-200">
                   Capabilities
                 </a>
+              </li>
+              <li>
+                <Link to="/about" className="text-zinc-400 hover:text-zinc-200">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link to="/pricing" className="text-zinc-400 hover:text-zinc-200">
+                  Pricing
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact" className="text-zinc-400 hover:text-zinc-200">
+                  Contact
+                </Link>
               </li>
               <li>
                 <Link to="/portal" className="text-zinc-400 hover:text-zinc-200">

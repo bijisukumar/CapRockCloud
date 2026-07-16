@@ -1,4 +1,8 @@
-export default function Hero({ onOpenGate }) {
+import { useGate } from "./GateContext.jsx";
+
+export default function Hero() {
+  const { openGate } = useGate();
+
   return (
     <section className="relative overflow-hidden border-b border-white/10">
       <div
@@ -33,7 +37,7 @@ export default function Hero({ onOpenGate }) {
             Explore capabilities
           </a>
           <button
-            onClick={onOpenGate}
+            onClick={openGate}
             className="rounded-md border border-white/15 px-5 py-2.5 text-sm font-semibold text-zinc-200 transition hover:border-white/30 hover:bg-white/5"
           >
             Get the migration checklist

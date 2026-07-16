@@ -1,10 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useGate } from "./GateContext.jsx";
 
-const NAV_LINKS = [{ label: "Capabilities", href: "#capabilities" }];
+const NAV_LINKS = [
+  { label: "Capabilities", href: "/#capabilities" },
+  { label: "About", to: "/about" },
+  { label: "Pricing", to: "/pricing" },
+  { label: "Contact", to: "/contact" },
+];
 
-export default function Header({ onOpenGate }) {
+export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { openGate } = useGate();
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-base-950/80 backdrop-blur">
@@ -14,20 +21,30 @@ export default function Header({ onOpenGate }) {
         </Link>
 
         <nav className="hidden items-center gap-8 sm:flex">
-          {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
-            >
-              {link.label}
-            </a>
-          ))}
+          {NAV_LINKS.map((link) =>
+            link.to ? (
+              <Link
+                key={link.to}
+                to={link.to}
+                className="text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
+              >
+                {link.label}
+              </a>
+            )
+          )}
         </nav>
 
         <div className="hidden items-center gap-3 sm:flex">
           <button
-            onClick={onOpenGate}
+            onClick={openGate}
             className="text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
           >
             Get the checklist
@@ -53,20 +70,31 @@ export default function Header({ onOpenGate }) {
       {mobileOpen && (
         <div className="border-t border-white/10 px-6 py-4 sm:hidden">
           <nav className="flex flex-col gap-1">
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
-                className="rounded-md px-2 py-2 text-sm font-medium text-zinc-300 hover:bg-white/5"
-              >
-                {link.label}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) =>
+              link.to ? (
+                <Link
+                  key={link.to}
+                  to={link.to}
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-2 py-2 text-sm font-medium text-zinc-300 hover:bg-white/5"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  className="rounded-md px-2 py-2 text-sm font-medium text-zinc-300 hover:bg-white/5"
+                >
+                  {link.label}
+                </a>
+              )
+            )}
             <button
               onClick={() => {
                 setMobileOpen(false);
-                onOpenGate?.();
+                openGate();
               }}
               className="rounded-md px-2 py-2 text-left text-sm font-medium text-zinc-300 hover:bg-white/5"
             >

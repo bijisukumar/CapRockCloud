@@ -16,6 +16,21 @@ export async function submitLead(payload) {
   return res.json();
 }
 
+export async function submitContactMessage(payload) {
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    throw new Error(body.error || `Message submission failed (${res.status})`);
+  }
+
+  return res.json();
+}
+
 export async function fetchTenantMetrics(tenantId) {
   const res = await fetch(`/api/tenants/${encodeURIComponent(tenantId)}/metrics`);
 
