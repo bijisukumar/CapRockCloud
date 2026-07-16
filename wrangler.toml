@@ -16,5 +16,15 @@ migrations_dir = "db/migrations"
 [env.production.vars]
 ENVIRONMENT = "production"
 
+[[env.production.d1_databases]]
+binding = "CAPROCK_DB"
+database_name = "caprock-db"
+database_id = "cb31942e-c90e-4298-a2c2-54b21f884bf4"
+
 [env.preview.vars]
 ENVIRONMENT = "preview"
+
+[[env.preview.d1_databases]]
+binding = "CAPROCK_DB"
+database_name = "caprock-db"
+database_id = "cb31942e-c90e-4298-a2c2-54b21f884bf4"
