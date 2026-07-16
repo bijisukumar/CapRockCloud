@@ -1,0 +1,20 @@
+name = "caprock-cloud"
+compatibility_date = "2024-09-01"
+pages_build_output_dir = "dist"
+
+# D1 binding used by /functions Pages Functions (env.CAPROCK_DB)
+[[d1_databases]]
+binding = "CAPROCK_DB"
+database_name = "caprock-db"
+database_id = "00000000-0000-0000-0000-000000000000" # replace with real D1 database_id from `wrangler d1 create`
+migrations_dir = "db/migrations"
+
+# Secrets (set via `wrangler pages secret put`, never committed):
+#   TURBO360_API_KEY   - server-side key used by functions/api/tenants/[tenantId]/metrics.js
+#   RESEND_API_KEY      - transactional email for the weekly leads digest (future cron trigger)
+
+[env.production.vars]
+ENVIRONMENT = "production"
+
+[env.preview.vars]
+ENVIRONMENT = "preview"
