@@ -13,9 +13,14 @@ export default function DashboardLayout() {
 
       <div className="flex-1">
         <header className="flex h-16 items-center justify-between border-b border-white/10 px-8">
-          <h1 className="text-sm font-medium text-zinc-300">
-            Azure Environment — {activeKey === "overview" ? "Overview" : activeKey}
-          </h1>
+          <div className="flex items-center gap-3">
+            <h1 className="text-sm font-medium text-zinc-300">
+              Azure Environment — {activeKey === "overview" ? "Overview" : activeKey}
+            </h1>
+            <span className="rounded-full border border-amber-500/30 bg-amber-500/10 px-2 py-0.5 text-xs font-medium text-amber-400">
+              Demo data
+            </span>
+          </div>
           <TenantSelector tenantSlug={tenantSlug} onChange={setTenantSlug} />
         </header>
 
