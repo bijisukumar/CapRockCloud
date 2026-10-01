@@ -9,6 +9,7 @@ treating it as final.
 """
 
 import os
+import sys
 
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter
@@ -23,9 +24,8 @@ from reportlab.platypus import (
     HRFlowable,
 )
 
-ACCENT = colors.HexColor("#0f766e")  # teal, close to the site's accent color
-INK = colors.HexColor("#111317")
-MUTED = colors.HexColor("#52525b")
+sys.path.insert(0, os.path.dirname(__file__))
+from pdf_brand import ACCENT_DARK as ACCENT, INK, MUTED, LINE, TOP_MARGIN, make_page_callbacks
 
 OUTPUT_PATH = os.path.join(
     os.path.dirname(__file__), "..", "public", "documents",
@@ -121,7 +121,7 @@ def build():
     doc = SimpleDocTemplate(
         OUTPUT_PATH,
         pagesize=letter,
-        topMargin=0.75 * inch,
+        topMargin=TOP_MARGIN,
         bottomMargin=0.75 * inch,
         leftMargin=0.85 * inch,
         rightMargin=0.85 * inch,
@@ -130,14 +130,6 @@ def build():
     )
 
     styles = getSampleStyleSheet()
-    kicker = ParagraphStyle(
-        "kicker", parent=styles["Normal"], fontName="Helvetica-Bold",
-        fontSize=9, textColor=ACCENT, spaceAfter=6, tracking=1,
-    )
-    title = ParagraphStyle(
-        "title", parent=styles["Title"], fontName="Helvetica-Bold",
-        fontSize=24, leading=28, textColor=INK, spaceAfter=10,
-    )
     intro = ParagraphStyle(
         "intro", parent=styles["Normal"], fontName="Helvetica",
         fontSize=11, leading=16, textColor=MUTED, spaceAfter=18,
@@ -151,9 +143,12 @@ def build():
         fontSize=9, textColor=MUTED,
     )
 
+    on_first_page, on_later_pages = make_page_callbacks(
+        "Middleware to Cloud Migration Checklist",
+        doc.leftMargin,
+    )
+
     story = []
-    story.append(Paragraph("CAPROCK CLOUD", kicker))
-    story.append(Paragraph("Middleware to Cloud Migration Checklist", title))
     story.append(
         Paragraph(
             "A phased checklist for moving legacy middleware and integrations onto "
@@ -162,14 +157,14 @@ def build():
             intro,
         )
     )
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#e4e4e7")))
+    story.append(HRFlowable(width="100%", thickness=1, color=LINE))
 
     for heading_text, items in SECTIONS:
         story.append(Paragraph(heading_text, heading))
         story.append(checklist_table(items))
 
     story.append(Spacer(1, 24))
-    story.append(HRFlowable(width="100%", thickness=1, color=colors.HexColor("#e4e4e7")))
+    story.append(HRFlowable(width="100%", thickness=1, color=LINE))
     story.append(Spacer(1, 10))
     story.append(
         Paragraph(
@@ -179,7 +174,7 @@ def build():
         )
     )
 
-    doc.build(story)
+    doc.build(story, onFirstPage=on_first_page, onLaterPages=on_later_pages)
     print(f"Wrote {OUTPUT_PATH}")
 
 
