@@ -31,6 +31,16 @@ export async function submitContactMessage(payload) {
   return res.json();
 }
 
+export async function fetchAsset(slug) {
+  const res = await fetch(`/api/assets/${encodeURIComponent(slug)}`);
+
+  if (!res.ok) {
+    throw new Error(`Failed to load asset ${slug} (${res.status})`);
+  }
+
+  return res.json();
+}
+
 export async function fetchTenantMetrics(tenantId) {
   const res = await fetch(`/api/tenants/${encodeURIComponent(tenantId)}/metrics`);
 

@@ -1,17 +1,18 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useGate } from "./GateContext.jsx";
+import CallRequestModal from "./CallRequestModal.jsx";
 
 const NAV_LINKS = [
   { label: "Capabilities", href: "/#capabilities" },
   { label: "About", to: "/about" },
+  { label: "Blog", to: "/blog" },
   { label: "Pricing", to: "/pricing" },
   { label: "Contact", to: "/contact" },
 ];
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { openGate } = useGate();
+  const [callOpen, setCallOpen] = useState(false);
 
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-base-950/80 backdrop-blur">
@@ -44,10 +45,10 @@ export default function Header() {
 
         <div className="hidden items-center gap-3 sm:flex">
           <button
-            onClick={openGate}
+            onClick={() => setCallOpen(true)}
             className="text-sm font-medium text-zinc-400 transition hover:text-zinc-200"
           >
-            Get the checklist
+            Get on a call
           </button>
           <Link
             to="/portal"
@@ -94,11 +95,11 @@ export default function Header() {
             <button
               onClick={() => {
                 setMobileOpen(false);
-                openGate();
+                setCallOpen(true);
               }}
               className="rounded-md px-2 py-2 text-left text-sm font-medium text-zinc-300 hover:bg-white/5"
             >
-              Get the checklist
+              Get on a call
             </button>
             <Link
               to="/portal"
@@ -110,6 +111,8 @@ export default function Header() {
           </nav>
         </div>
       )}
+
+      <CallRequestModal open={callOpen} onClose={() => setCallOpen(false)} />
     </header>
   );
 }

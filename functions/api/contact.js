@@ -22,6 +22,7 @@ export async function onRequestPost({ request, env }) {
   const email = (body.email || "").trim().toLowerCase();
   const company = (body.company || "").trim() || null;
   const message = (body.message || "").trim();
+  const source = (body.source || "contact_form").trim();
 
   if (!name) return badRequest("name is required.");
   if (!email || !EMAIL_PATTERN.test(email)) return badRequest("A valid email is required.");
@@ -29,9 +30,9 @@ export async function onRequestPost({ request, env }) {
 
   try {
     await env.CAPROCK_DB.prepare(
-      `INSERT INTO contact_messages (name, email, company, message) VALUES (?1, ?2, ?3, ?4)`
+      `INSERT INTO contact_messages (name, email, company, message, source) VALUES (?1, ?2, ?3, ?4, ?5)`
     )
-      .bind(name, email, company, message)
+      .bind(name, email, company, message, source)
       .run();
   } catch {
     return new Response(JSON.stringify({ error: "Failed to store message." }), {
