@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { submitLead } from "../../lib/api.js";
 
 const FREE_EMAIL_DOMAINS = new Set([
@@ -76,8 +77,8 @@ export default function GatedContentModal({
     }
   }
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/60 px-4 py-8 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-lg border border-white/10 bg-base-900 p-8 shadow-glow">
         <div className="flex items-start justify-between">
           <h3 className="text-lg font-semibold text-white">
@@ -167,6 +168,7 @@ export default function GatedContentModal({
           </form>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

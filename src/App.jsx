@@ -21,6 +21,7 @@ export default function App() {
         <Route path="/blog" element={<BlogIndexPage />} />
         <Route path="/blog/:slug" element={<BlogPostPage />} />
         <Route path="/resources/:slug" element={<ResourceLandingPage />} />
+        <Route path="/r/:slug" element={<ResourceLandingPage />} />
       </Route>
       <Route path="/portal" element={<PortalLanding />} />
       <Route path="/portal/dashboard/*" element={<PortalPage />} />
