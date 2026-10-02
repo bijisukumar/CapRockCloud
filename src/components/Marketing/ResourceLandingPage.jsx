@@ -79,7 +79,7 @@ export default function ResourceLandingPage() {
         name: values.name.trim(),
         email: values.email.trim().toLowerCase(),
         company: values.company.trim(),
-        assetSlug: slug,
+        assetSlug: asset.slug,
         attributionToken: new URLSearchParams(window.location.search).get("utm_campaign") || null,
         sourcePage: window.location.pathname,
       });

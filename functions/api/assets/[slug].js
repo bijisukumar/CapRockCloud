@@ -7,7 +7,7 @@ export async function onRequestGet({ params, env }) {
   const { slug } = params;
 
   const asset = await env.CAPROCK_DB.prepare(
-    `SELECT slug, title, description, file_path FROM content_assets WHERE slug = ?1`
+    `SELECT slug, title, description, file_path FROM content_assets WHERE slug = ?1 OR alias = ?1`
   )
     .bind(slug)
     .first();

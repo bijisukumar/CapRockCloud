@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { createPortal } from "react-dom";
 import { submitContactMessage } from "../../lib/api.js";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -50,8 +51,10 @@ export default function CallRequestModal({ open, onClose }) {
     }
   }
 
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 px-4">
+  // Portaled to <body>: the sticky header's backdrop-blur makes it the
+  // containing block for `fixed` children, which pinned the modal inside it.
+  return createPortal(
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-black/60 px-4 py-8 backdrop-blur-sm">
       <div className="w-full max-w-md rounded-lg border border-white/10 bg-base-900 p-8 shadow-glow">
         <div className="flex items-start justify-between">
           <h3 className="text-lg font-semibold text-white">
@@ -139,6 +142,7 @@ export default function CallRequestModal({ open, onClose }) {
           </form>
         )}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
