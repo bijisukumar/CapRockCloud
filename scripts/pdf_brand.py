@@ -65,3 +65,74 @@ def make_page_callbacks(title_text, left_margin):
         canvas.restoreState()
 
     return on_first_page, on_later_pages
+
+
+# ---- Shared body styles and table helpers for new documents ----
+from reportlab.platypus import Table, TableStyle  # noqa: E402
+
+body = ParagraphStyle("body", parent=_styles["Normal"], fontName="Helvetica", fontSize=10, leading=14.5, textColor=INK)
+body_muted = ParagraphStyle("body_muted", parent=body, textColor=MUTED)
+small = ParagraphStyle("small", parent=body, fontSize=9, leading=13)
+cell_head = ParagraphStyle("cell_head", parent=body, fontName="Helvetica-Bold", fontSize=10)
+intro_style = ParagraphStyle("intro", parent=body_muted, fontSize=11, leading=16, spaceAfter=10)
+heading_style = ParagraphStyle(
+    "heading", parent=_styles["Heading2"], fontName="Helvetica-Bold",
+    fontSize=13, leading=16, textColor=INK, spaceBefore=18, spaceAfter=8,
+)
+footer_style = ParagraphStyle("footer", parent=small, textColor=MUTED)
+
+
+def p(text, style=body):
+    return Paragraph(text, style)
+
+
+def grid_table(rows, col_widths, bold_first_col=False):
+    """rows[0] is the header row; cells are plain strings (use &amp; for ampersands)."""
+    first_col = ParagraphStyle("first_col", parent=small, fontName="Helvetica-Bold")
+    cells = []
+    for r, row in enumerate(rows):
+        if r == 0:
+            cells.append([Paragraph(c, cell_head) for c in row])
+        else:
+            cells.append([
+                Paragraph(c, first_col if (bold_first_col and i == 0) else small)
+                for i, c in enumerate(row)
+            ])
+    t = Table(cells, colWidths=col_widths, repeatRows=1)
+    t.setStyle(TableStyle([
+        ("BACKGROUND", (0, 0), (-1, 0), PANEL),
+        ("VALIGN", (0, 0), (-1, -1), "TOP"),
+        ("GRID", (0, 0), (-1, -1), 0.5, LINE),
+        ("TOPPADDING", (0, 0), (-1, -1), 6),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ("LEFTPADDING", (0, 0), (-1, -1), 8),
+        ("RIGHTPADDING", (0, 0), (-1, -1), 8),
+    ]))
+    return t
+
+
+def build_branded_doc(path, title, band_title, story, author="Caprock Cloud"):
+    """Build a PDF with the dark header band on page 1 and a compact top margin
+    on later pages (SimpleDocTemplate applies one top margin to every page)."""
+    from reportlab.lib.pagesizes import letter
+    from reportlab.platypus import BaseDocTemplate, Frame, NextPageTemplate, PageTemplate
+
+    left = right = 0.85 * inch
+    bottom = 0.75 * inch
+    page_w, page_h = letter
+    frame_w = page_w - left - right
+
+    doc = BaseDocTemplate(
+        path, pagesize=letter, leftMargin=left, rightMargin=right,
+        topMargin=TOP_MARGIN, bottomMargin=bottom, title=title, author=author,
+    )
+    on_first, on_later = make_page_callbacks(band_title, left)
+    doc.addPageTemplates([
+        PageTemplate(id="First", onPage=on_first, frames=[
+            Frame(left, bottom, frame_w, page_h - TOP_MARGIN - bottom, id="first"),
+        ]),
+        PageTemplate(id="Later", onPage=on_later, frames=[
+            Frame(left, bottom, frame_w, page_h - 0.8 * inch - bottom, id="later"),
+        ]),
+    ])
+    doc.build([NextPageTemplate("Later")] + story)
